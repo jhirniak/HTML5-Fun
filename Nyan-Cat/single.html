@@ -1,0 +1,82 @@
+<html>
+	<body id="body">
+		
+	</body>
+</html>
+
+
+<script>
+
+//var canvas = document.createElement("canvas");
+//var ctx = canvas.getContext('2d');
+var assets = ['/img/nyan0.png',
+              '/img/nyan1.png',
+              '/img/nyan2.png',
+              '/img/nyan3.png',
+              '/img/nyan4.png',
+              '/img/nyan5.png'
+             ];
+             
+for (var i = 0; i < assets.length; i++)
+	assets[i] = '/home/draco/School/Udacity/HTML5/test/first_5' + assets[i];
+	
+var frames = [];
+
+var onImageLoad = function(){
+    console.log("IMAGE!!!");
+};
+
+var setup = function() {
+    body = document.getElementById('body');
+    canvas = document.createElement('canvas');
+
+    ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    body.appendChild(canvas);
+
+    // Load each image URL from the assets array into the frames array 
+    // in the correct order.
+    // Afterwards, call setInterval to run at a framerate of 30 frames 
+    // per second, calling the animate function each time.
+    // YOUR CODE HERE
+    for (var j = 0; j < assets.length; j++) {
+    	var i = new Image();
+    	i.onload = onImageLoad;
+    	i.src = assets[j];
+    	frames.push(i);
+    }
+    
+    
+    setInterval(animate, 50);
+};
+
+var current_frame = 0;
+var x_limit = window.innerWidth;
+var x = x_limit;
+
+var animate = function(){
+    // Draw each frame in order, looping back around to the 
+    // beginning of the animation once you reach the end.
+    // Draw each frame at a position of (0,0) on the canvas.
+  
+    // Try your code with this call to clearRect commented out
+    // and uncommented to see what happens!
+    //
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+  
+    // YOUR CODE HERE
+    current_frame = (current_frame + 1) % frames.length;
+    x = x - 10;
+    if (x <= -128)
+    	x = x_limit;
+    ctx.drawImage(frames[current_frame], x, 0);
+};
+
+// We'll call your setup function in our test code, so
+// don't call it in your code.
+setup();
+
+</script>
